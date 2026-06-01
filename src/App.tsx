@@ -9,6 +9,7 @@ import Dashboard from './components/Dashboard';
 import TimetableApp from './components/TimetableApp';
 import GrowthRecordApp from './components/GrowthRecordApp';
 import SyllabusApp from './components/SyllabusApp';
+import EvaluationApp from './components/EvaluationApp';
 import { ViewType } from './types';
 
 function PlaceholderView({ title }: { title: string }) {
@@ -34,9 +35,9 @@ export default function App() {
       case 'timetable': return <TimetableApp />;
       case 'growth': return <GrowthRecordApp />;
       case 'syllabus': return <SyllabusApp />;
+      case 'evaluation': return <EvaluationApp />;
       case 'attendance': return <PlaceholderView title="출석 현황 관리" />;
       case 'portfolio': return <PlaceholderView title="배움장터(결과물) 관리" />;
-      case 'evaluation': return <PlaceholderView title="성장나눔 다면평가" />;
       case 'meeting': return <PlaceholderView title="창체/모두모임 기록" />;
       case 'mentoring': return <PlaceholderView title="짝쌤 진로/학습 상담" />;
       case 'course_open': return <PlaceholderView title="과목 개설/교과 관리" />;
