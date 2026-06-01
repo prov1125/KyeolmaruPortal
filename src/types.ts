@@ -13,6 +13,7 @@ export interface Course {
     name: string;
     times: CourseTime[];
     color: string;
+    allowedGrades: number[];
 }
 
 export type ViewType = 

@@ -71,6 +71,7 @@ export default function TimetableApp() {
         const info = CATEGORY_INFO[category];
         const courses = MOCK_COURSES.filter(c => c.category === category);
         const Icon = icons[category];
+        const CURRENT_GRADE = 1; // 1학년 학생으로 가정
 
         return (
             <div key={category} className="mb-6">
@@ -81,20 +82,30 @@ export default function TimetableApp() {
                 <div className="flex flex-col gap-2">
                     {courses.map(course => {
                         const isSelected = selectedCourses.some(c => c.id === course.id);
+                        const isAllowed = course.allowedGrades.includes(CURRENT_GRADE);
+
                         return (
                             <button 
                                 key={course.id} 
-                                onClick={() => handleCourseClick(course)}
+                                onClick={() => isAllowed && handleCourseClick(course)}
+                                disabled={!isAllowed}
                                 className={cn(
-                                    "text-left p-3 rounded-xl border transition-all duration-200 flex justify-between items-center group",
+                                    "text-left p-3 rounded-xl border transition-all duration-200 flex justify-between items-center group relative overflow-hidden",
                                     isSelected 
                                         ? `${course.color} shadow-sm ring-2 ring-offset-1` 
-                                        : "bg-white border-slate-200 hover:border-slate-400 hover:shadow-md"
+                                        : isAllowed
+                                            ? "bg-white border-slate-200 hover:border-slate-400 hover:shadow-md"
+                                            : "bg-slate-50 border-slate-200 opacity-60 cursor-not-allowed grayscale-[50%]"
                                 )}
                             >
-                                <div>
-                                    <p className={cn("font-semibold", !isSelected && "text-slate-800")}>
+                                <div className="flex-1">
+                                    <p className={cn("font-semibold flex items-center gap-2", !isSelected && "text-slate-800")}>
                                         {course.name}
+                                        {!isAllowed && (
+                                            <span className="inline-block px-1.5 py-0.5 bg-slate-200/80 text-slate-600 rounded text-[10px] font-bold">
+                                                {course.allowedGrades.join(',')}학년 전용
+                                            </span>
+                                        )}
                                     </p>
                                     <p className={cn("text-xs mt-1", isSelected ? "opacity-80" : "text-slate-500")}>
                                         {course.times.map(t => `${t.day}${t.period}`).join(', ')}교시
@@ -103,7 +114,9 @@ export default function TimetableApp() {
                                 <div>
                                     {isSelected 
                                         ? <CheckCircle2 className="w-5 h-5" /> 
-                                        : <Plus className="w-5 h-5 text-slate-400" />
+                                        : isAllowed 
+                                            ? <Plus className="w-5 h-5 text-slate-400 group-hover:text-emerald-500 transition-colors" />
+                                            : <div />
                                     }
                                 </div>
                             </button>
