@@ -1,0 +1,6 @@
+{
+  "name": "결마루미래학교 포털",
+  "description": "결마루미래학교의 마디 중심 수강신청 및 성장기록부 맞춤형 관리 시스템 포털입니다.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
